@@ -1,0 +1,13 @@
+data/hitachi/
+explore/
+.venv
+.vscode
+.cache
+__pycache__
+.git/
+results/
+Task*
+*.DS_Store
+mlruns
+*.csv
+requirements-streamlit.txt

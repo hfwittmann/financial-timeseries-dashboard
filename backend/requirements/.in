@@ -1,0 +1,13 @@
+
+connexion[swagger-ui]
+d6tflow
+environs
+flask
+gunicorn
+lxml
+numpy==1.19.3
+pandas
+plotly
+# psycopg2
+pyyaml
+quandl
