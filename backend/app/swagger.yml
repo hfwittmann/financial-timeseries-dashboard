@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: This is the swagger file that timeseries app
+  description: This is the swagger file for the backend of the financial-timeseries-dashboard
   version: "1.0.0"
   title: Swagger Timeseries
 consumes:
