@@ -14,11 +14,11 @@ def getTickers():
         if 'Ticker symbol' in constituents.columns: break
 
     constituents = constituents.reset_index(drop=True)
-    constituents['Quandl Ticker symbol'] = 'FSE' + env(
-        'CHARACTER') + constituents['Ticker symbol'] + '_X'
 
-    companyTicker = {stockinfo['Quandl Ticker symbol'] : stockinfo['Company'] \
+    constituents['Yahoo Ticker symbol'] = constituents['Ticker symbol']
+
+    companyTicker = {stockinfo['Yahoo Ticker symbol'] : stockinfo['Company'] \
             for i, stockinfo in constituents.iterrows() \
-            if isinstance(stockinfo['Quandl Ticker symbol'], str) }
+            if isinstance(stockinfo['Yahoo Ticker symbol'], str) }
 
     return companyTicker

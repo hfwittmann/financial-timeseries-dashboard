@@ -46,13 +46,13 @@ paths:
       tags:
         - "selection_plot"
       summary: "The selection_plot data structure supported by the server application"
-      description: "Read the selection_plot with data obtained from quandl"
+      description: "Read the selection_plot with data obtained from yahoo"
 
       parameters:
         - name: selection
           in: path
-          description: selection name such as 'FSE?BAYN.DE_X' or'FSE?BEI.DE_X'. Remark \
-            the corresponding Quandl Tickers are 'FSE/BAYN.DE_X' or'FSE/BEI.DE_X'
+          description: selection name such as BAYN.DE and BEI.DE. Remark \
+            The corresponding Yahoo tickers are also BAYN.DE and BEI.DE
           type: string
           required: True
 

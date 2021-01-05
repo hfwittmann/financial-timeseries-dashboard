@@ -22,10 +22,8 @@ def get_plot(selection:str, plottype:str):
 
     assert plottype in ['scatter', 'returns', 'histogram']
 
-
-    selection_q = selection.replace(env('CHARACTER'), '%3F')
     _ = requests.get(
-        f'http://{env("HOST")}:5000/api/plot/{selection_q}/{plottype}')
+        f'http://{env("HOST")}:5000/api/plot/{selection}/{plottype}')
     fig = json.loads(_.json())
 
     return fig

@@ -10,4 +10,4 @@ pandas
 plotly
 # psycopg2
 pyyaml
-quandl
+pandas_datareader
