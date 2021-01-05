@@ -11,7 +11,7 @@ def get_todays_data():
             for plottype in ['scatter', 'returns', 'histogram']:
                 read_selection_plot(ticker, plottype)
 
-        return 'get_todays_data succeded'
+        return 'get_todays_data succeeded'
 
     except Exception as e:
 
