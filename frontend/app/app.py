@@ -10,21 +10,22 @@ st.set_page_config(layout='wide')
 from subs.access_backend import get_tickerlist
 from subs.access_backend import get_plot
 
-ticker, companyTicker = get_tickerlist()
-# part = st.selectbox(label='Part', options=[1, 2, 3])
+tickerTable = get_tickerlist().set_index('Ticker symbol')
 
-# default = {
-#     '1': ticker[0:10],
-#     '2': ticker[10:20],
-#     '3': ticker[20:30]
-# }[str(part)]
 
-default = [ticker[i] for i in [2, 3, 6, 12]]
+
+sectors = tickerTable['Prime Standard Sector'].unique()
+sectors.sort()
+sector = st.selectbox(label='Select a Sector. Remark: This sets the default for the selected stocks', options=sectors)
+
+default_index = tickerTable['Prime Standard Sector'] == sector
+# default_index= tickerTable['Prime Standard Sector'].str.contains(sector)
+default = tickerTable[default_index]
 
 selections = st.multiselect(label='Dax Constituents',
-                            options=ticker,
-                            format_func=lambda x: companyTicker[x],
-                            default=default)
+                            options=list(tickerTable.index),
+                            format_func=lambda x: tickerTable.at[x, 'Company'],
+                            default=list(default.index))
 
 for selection in selections:
 
@@ -35,25 +36,23 @@ for selection in selections:
         fig_histogram = get_plot(selection, 'histogram')
 
 
-        st.header(companyTicker[selection])
+        st.header(tickerTable.at[selection, 'Company'])
         c1, _, c2, _, c3 = st.beta_columns((10, 1, 10, 1, 10))
-
-        # widgets = {
-        #     'success':'plotly_chart',
-        #     'failure':'text'
-        # }
-
-        
-        # getattr(c1, widgets[fig_scatter['status']])(fig_scatter['plot'], use_container_width=True)
-        # getattr(c2, widgets[fig_returns['status']])(fig_scatter['plot'], use_container_width=True)
-        # getattr(c3, widgets[fig_histogram['status']])(fig_scatter['plot'], use_container_width=True)
 
         c1.plotly_chart(fig_scatter['plot'], use_container_width=True)
         c2.plotly_chart(fig_returns['plot'], use_container_width=True)
         c3.plotly_chart(fig_histogram['plot'], use_container_width=True)
 
     except Exception as e:
-        st.header(companyTicker[selection])
-        st.markdown(f'Data for {companyTicker[selection]} not available', unsafe_allow_html=False)
+        st.header(tickerTable.at[selection, 'Company'])
+        st.markdown(f"Data for {tickerTable.at[selection, 'Company']} not available", unsafe_allow_html=False)
         print(selection)
         print(e)
+
+if __name__ == "__main__":
+    print(tickerTable)
+    print(tickerTable.index[:3])
+
+    print(sectors)
+    print(tickerTable['Prime Standard Sector']==sector)
+    print(default)

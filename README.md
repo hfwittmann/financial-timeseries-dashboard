@@ -11,14 +11,14 @@ To run, simply do the following:
 
   ````
   PYTHONPATH=.
-  HOST= localhost
+  HOST=localhost
   ````
   - In the the front end folder
 create a file with name .env with the following contents:
 
 ````
 PYTHONPATH=.
-HOST= backend
+HOST=backend
 ````
 
 

@@ -1,7 +1,4 @@
 import pandas as pd
-from environs import Env
-env = Env()
-env.read_env()
 
 
 def getTickers():
@@ -13,12 +10,10 @@ def getTickers():
     for constituents in tables:
         if 'Ticker symbol' in constituents.columns: break
 
-    constituents = constituents.reset_index(drop=True)
+    constituents = constituents.loc[:, ~constituents.columns.str.contains('^Unnamed')]
 
-    constituents['Yahoo Ticker symbol'] = constituents['Ticker symbol']
+    return constituents
 
-    companyTicker = {stockinfo['Yahoo Ticker symbol'] : stockinfo['Company'] \
-            for i, stockinfo in constituents.iterrows() \
-            if isinstance(stockinfo['Yahoo Ticker symbol'], str) }
 
-    return companyTicker
+if __name__ == "__main__":
+    print(getTickers())

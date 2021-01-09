@@ -30,3 +30,15 @@ def read(selection, plottype):
     fig_serialied = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
     return fig_serialied
+
+if __name__ == "__main__":
+    print(get_runDate())
+
+
+    runDate = get_runDate()
+    ticker = 'BAS.DE'  # companyTicker[selection]
+    plottype='scatter'
+
+    plot_dict = dict(runDate=runDate, stockticker=ticker, plottype=plottype)
+
+    d6tflow.run(Task_getPlot(**plot_dict))

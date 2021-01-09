@@ -17,4 +17,8 @@ def read():
     d6tflow.run(Task_getTickers(runDate=runDate))
     out = Task_getTickers(runDate=runDate).output().load()
 
-    return out
+    return out.to_json(orient='records')
+
+if __name__ == "__main__":
+    print(get_runDate())
+    print(read())

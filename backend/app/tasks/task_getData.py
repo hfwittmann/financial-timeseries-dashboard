@@ -18,7 +18,7 @@ class Task_getData(TaskJson):
 
     def run(self):
 
-        tickers = self.input().load()
+        # tickers = self.input().load()
         #assert self.stockticker in tickers.keys(), 'Symbol should be in ticker list'
 
         out = getData(stockticker=self.stockticker)

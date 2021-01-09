@@ -1,9 +1,9 @@
 import d6tflow
-from d6tflow.tasks import TaskJson
+from d6tflow.tasks import TaskCSVGZPandas, TaskCSVPandas, TaskJson
 from subs.getTickers import getTickers
 
 
-class Task_getTickers(TaskJson):
+class Task_getTickers(TaskCSVPandas):
 
     runDate = d6tflow.DateParameter()
 
@@ -18,4 +18,7 @@ if __name__ == "__main__":
     runDate = date.today()
     d6tflow.run(Task_getTickers(runDate=runDate))
 
-    print(Task_getTickers(runDate).output().load())
+    x = Task_getTickers(runDate).output().load()
+
+    print(type(x))
+    print(x)

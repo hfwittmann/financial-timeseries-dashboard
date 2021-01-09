@@ -16,7 +16,7 @@ class Task_getPlot(TaskPickle):
     def run(self):
 
         tickers, Data = self.input()
-        tickers, Data = tickers.load(), Data.load()
+        tickers, Data = tickers.load().set_index('Ticker symbol'), Data.load()
 
         status = Data['status']
 
@@ -40,7 +40,7 @@ class Task_getPlot(TaskPickle):
             plottype=self.plottype,
             performance_data=performance_data,
             status=status,
-            ticker=tickers[self.stockticker],
+            ticker=tickers.at[self.stockticker, 'Company'],
         )
         self.save(myplot)
 
