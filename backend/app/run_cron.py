@@ -1,3 +1,5 @@
+import pandas as pd
+
 from tier1.tickerlist import read as read_tickerlist
 from tier1.selection_plot import read as read_selection_plot
 
@@ -6,8 +8,10 @@ from tier1.selection_plot import read as read_selection_plot
 def get_todays_data():
 
     try:
-        tickerlist = read_tickerlist()
-        for ticker, companyTicker in tickerlist.items():
+        response_json = read_tickerlist()
+        companyTicker = pd.read_json(response_json).set_index('Ticker symbol')
+
+        for ticker in companyTicker.index:
             for plottype in ['scatter', 'returns', 'histogram']:
                 read_selection_plot(ticker, plottype)
 
