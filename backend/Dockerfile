@@ -1,19 +1,28 @@
-# FROM mubuntu:latest
-FROM python:3.8
+FROM python:3.9-slim-buster
+
+
+
+
+ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
 
 RUN apt update && apt-get install -y supervisor
-RUN pip3 install pip-tools
+RUN pip install  kedro-fast-api --no-dependencies
 
-COPY requirements /requirements
-RUN pip-compile /requirements/.in --output-file /requirements/.txt
-RUN pip install -r requirements/.txt
+RUN  pip install poetry
+
+RUN poetry config virtualenvs.create false
 
 COPY .env /
-COPY app /app
+RUN mkdir /app
 WORKDIR /app
 
 
-EXPOSE 5000
-COPY app/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY pyproject.toml /app
+COPY poetry.lock /app
+
+RUN poetry install --only main
+
+EXPOSE 8000
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord"]

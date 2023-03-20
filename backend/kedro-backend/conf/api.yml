@@ -1,0 +1,82 @@
+# API information
+title: 'FastAPI'
+description: >
+  ChimichangApp API helps you do awesome stuff. 🚀
+
+  ## Items
+
+  You can **read items**.
+
+  ## Users
+
+  You will be able to:
+
+  * **Create users** (_not implemented_).
+  * **Read users** (_not implemented_).
+version: '0.1.0'
+
+# Declare all tags
+tags:
+  users:
+    description: "Operations with users. The **login** logic is also here."
+  items:
+    description: "Manage items. So _fancy_ they have their own docs."
+
+routes:
+  # A route is the “name” you use to access endpoints, used in the URL:
+  # www.some_api.com/my_model/
+  Tickerlist_provider:
+    # Catalog reference to .pickle model
+    predictor: Tickerlist_provider
+    # allowed types int, float, str, bool and enum
+    # parameters are used to create a single row pandas df
+    # make sure to declare in the same order as your model needs.
+
+    # Declare route tags
+    tags: ['users']
+
+    parameters:
+      datatype:
+        # enum type requires options(numbers as options doenst work)
+        type: enum
+        options:
+          - tickerlist
+  # A route is the “name” you use to access endpoints, used in the URL:
+  # www.some_api.com/my_model/
+  Stockticker_provider:
+    # Catalog reference to .pickle model
+    predictor: Stockticker_provider
+    # allowed types int, float, str, bool and enum
+    # parameters are used to create a single row pandas df
+    # make sure to declare in the same order as your model needs.
+
+    # Declare route tags
+    tags: ['users']
+
+    parameters:
+      plottype:
+        # enum type requires options(numbers as options doenst work)
+        type: enum
+        options:
+          - scatter
+          - returns
+          - histogram
+      selection:
+        type: str
+
+  Cron_provider:
+    # Catalog reference to .pickle model
+    predictor: Cron_provider
+    # allowed types int, float, str, bool and enum
+    # parameters are used to create a single row pandas df
+    # make sure to declare in the same order as your model needs.
+
+    # Declare route tags
+    tags: ['users']
+
+    parameters:
+      datatype:
+        # enum type requires options(numbers as options doenst work)
+        type: enum
+        options:
+          - cron

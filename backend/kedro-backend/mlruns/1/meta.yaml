@@ -1,0 +1,4 @@
+artifact_location: file:///home/hfwittmann/Sync/DataScience/dax-finance/code/backend/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: backend

@@ -1,0 +1,15 @@
+Tickerlist_provider:
+  type: pickle.PickleDataSet
+  filepath: data/09_predictor/Tickerlist_provider.pickle
+  versioned: true
+
+Stockticker_provider:
+  type: pickle.PickleDataSet
+  filepath: data/09_predictor/Stockticker_provider.pickle
+  versioned: true
+
+Cron_provider:
+  type: pickle.PickleDataSet
+  filepath: data/09_predictor/Cron_provider.pickle
+  versioned: true
+

@@ -1,35 +1,45 @@
-from subs.orderdict import orderByValue
+# from subs.orderdict import orderByValue
 import requests
 import json
 import streamlit as st
 import pandas as pd
 
 from environs import Env
+
 env = Env()
 env.read_env()
 
 # @st.cache
 def get_tickerlist():
 
-    response = requests.get(f'http://{env("HOST")}:5000/api/tickerlist')
+    response = requests.get(
+        f"http://{env('HOST')}:8000/Tickerlist_provider?datatype=tickerlist"
+    )
+
     response_json = response.json()
 
-    companyTicker = pd.read_json(response_json)
-    # companyTicker = orderByValue(companyTicker)
+    companyTicker = pd.read_json(response_json["myData"])
 
-    # ticker = list(companyTicker.keys())
     return companyTicker
 
+
 # @st.cache
-def get_plot(selection:str, plottype:str):
+def get_plot(selection: str, plottype: str):
 
-    assert plottype in ['scatter', 'returns', 'histogram']
-    _ = requests.get(
-        f'http://{env("HOST")}:5000/api/plot/{selection}/{plottype}')
+    assert plottype in ["scatter", "returns", "histogram"]
 
-    fig = json.loads(_.json())
+    response = requests.get(
+        f"http://{env('HOST')}:8000/Stockticker_provider?plottype={plottype}&selection={selection}"
+    )
+
+    blub = response.json()
+
+    fig = json.loads(blub["plot"])
 
     return fig
 
+
 if __name__ == "__main__":
     print(get_tickerlist())
+
+    print(get_plot("ADS.DE", "scatter"))
