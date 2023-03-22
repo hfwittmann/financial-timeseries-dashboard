@@ -13,7 +13,7 @@ env.read_env()
 def get_tickerlist():
 
     response = requests.get(
-        f"http://{env('HOST')}:8000/Tickerlist_provider?datatype=tickerlist"
+        f"http://{env('HOST')}/Tickerlist_provider?datatype=tickerlist"
     )
 
     response_json = response.json()
@@ -29,7 +29,7 @@ def get_plot(selection: str, plottype: str):
     assert plottype in ["scatter", "returns", "histogram"]
 
     response = requests.get(
-        f"http://{env('HOST')}:8000/Stockticker_provider?plottype={plottype}&selection={selection}"
+        f"http://{env('HOST')}/Stockticker_provider?plottype={plottype}&selection={selection}"
     )
 
     blub = response.json()
