@@ -10,7 +10,7 @@ RUN  pip install poetry
 RUN mkdir /requirements
 RUN poetry config virtualenvs.create false
 COPY pyproject.toml /requirements
-# COPY poetry.lock /requirements
+COPY poetry.lock /requirements
 WORKDIR /requirements
 RUN poetry install --only main
 
