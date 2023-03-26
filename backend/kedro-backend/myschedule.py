@@ -8,12 +8,12 @@ def job():
     print("I'm working...")
     subprocess.run(
         ["kedro", "run"],
-        cwd="./kedro-backend",
+        cwd="/app",
     )
 
 
-schedule.every(10).seconds.do(job)
-# schedule.every().day.at("09:00").do(job)
+# schedule.every(10).seconds.do(job)
+schedule.every().day.at("09:00").do(job)
 
 
 while True:
