@@ -3,26 +3,7 @@ This post is very much about technology integration. Its aim is to build a dashb
 
 This repo is used and described in the following blog post: https://arthought.com/financial-timeseries-dashboard/
 
-To run, simply do the following:
-
-1.
-  - In the the backend folder
-  create a file with name .env with the following contents:
-
-  ````
-  PYTHONPATH=.
-  HOST=localhost
-  ````
-  - In the the front end folder
-create a file with name .env with the following contents:
-
-````
-PYTHONPATH=.
-HOST=backend
-````
-
-
-Now run
+To run, simply do
 
 ````
 docker-compose -p deployment -f docker-compose.yml up --build -d

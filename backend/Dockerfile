@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.10-slim-buster
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
 
@@ -14,9 +14,11 @@ COPY poetry.lock /requirements
 WORKDIR /requirements
 RUN poetry install --only main
 
-COPY .env /
 RUN mkdir /app
 WORKDIR /app
+
+ENV PYTHONPATH=.
+ENV HOST=localhost
 
 EXPOSE 8000
 

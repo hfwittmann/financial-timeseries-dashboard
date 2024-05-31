@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.11
 
 ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
 
@@ -14,9 +14,12 @@ COPY poetry.lock /requirements
 WORKDIR /requirements
 RUN poetry install --only main
 
-COPY .env /
 RUN mkdir /app
 WORKDIR /app
+
+ENV PYTHONPATH=.
+ENV BACKEND=backend
+ENV PORT=8000
 
 EXPOSE 8501
 
