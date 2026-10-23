@@ -1,19 +1,23 @@
-# FROM mubuntu:latest
-FROM python:3.8
+  FROM python:3.11-slim
 
-RUN apt update && apt-get install -y supervisor
-RUN pip3 install pip-tools
+  ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
-COPY requirements /requirements
-RUN pip-compile /requirements/.in --output-file /requirements/.txt
-RUN pip install -r requirements/.txt
+  RUN apt update && apt-get install -y supervisor
+  RUN pip install kedro-fast-api --no-dependencies
 
-COPY .env /
-COPY app /app
-WORKDIR /app
+  RUN pip install uv
 
+  RUN mkdir /requirements
+  COPY pyproject.toml uv.lock /requirements
+  WORKDIR /requirements
+  RUN uv export --frozen --no-dev --no-emit-project --no-hashes -o requirements.txt && uv pip install --system -r requirements.txt
 
-EXPOSE 5000
-COPY app/config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+  COPY .env /
+  RUN mkdir /app
+  WORKDIR /app
 
-CMD ["/usr/bin/supervisord"]
+  EXPOSE 8000
+
+  COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+  CMD ["/usr/bin/supervisord"]

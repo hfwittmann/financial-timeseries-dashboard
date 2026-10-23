@@ -55,7 +55,6 @@ fixMatplotlib = true
 folderWatchBlacklist = ['']
 
 
-
 # If false, will attempt to open a browser window on start.
 # Default: false unless (1) we are on a Linux box where DISPLAY is unset, or (2) server.liveSave is set.
 headless = true
@@ -80,7 +79,7 @@ enableCORS = false
 [browser]
 
 # Internet address of the server server that the browser should connect to. Can be IP address or DNS name.
-# Default: 'localhost'
+# Default: 'env("HOST")'
 serverAddress = "0.0.0.0"
 
 # Whether to send usage statistics to Streamlit.
