@@ -1,25 +1,23 @@
-FROM python:3.9-slim-buster
+  FROM python:3.11-slim
 
-ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
+  ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
-RUN apt update && apt-get install -y supervisor
-RUN pip install  kedro-fast-api --no-dependencies
+  RUN apt update && apt-get install -y supervisor
+  RUN pip install kedro-fast-api --no-dependencies
 
-RUN  pip install poetry
+  RUN pip install uv
 
-RUN mkdir /requirements
-RUN poetry config virtualenvs.create false
-COPY pyproject.toml /requirements
-COPY poetry.lock /requirements
-WORKDIR /requirements
-RUN poetry install --only main
+  RUN mkdir /requirements
+  COPY pyproject.toml uv.lock /requirements
+  WORKDIR /requirements
+  RUN uv export --frozen --no-dev --no-emit-project --no-hashes -o requirements.txt && uv pip install --system -r requirements.txt
 
-COPY .env /
-RUN mkdir /app
-WORKDIR /app
+  COPY .env /
+  RUN mkdir /app
+  WORKDIR /app
 
-EXPOSE 8000
+  EXPOSE 8000
 
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+  COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-CMD ["/usr/bin/supervisord"]
+  CMD ["/usr/bin/supervisord"]

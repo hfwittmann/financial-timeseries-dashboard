@@ -1,6 +1,7 @@
 # from subs.orderdict import orderByValue
 import requests
 import json
+from io import StringIO
 import streamlit as st
 import pandas as pd
 
@@ -18,7 +19,7 @@ def get_tickerlist():
 
     response_json = response.json()
 
-    companyTicker = pd.read_json(response_json["myData"])
+    companyTicker = pd.read_json(StringIO(response_json["myData"]))
 
     return companyTicker
 

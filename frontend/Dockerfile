@@ -1,18 +1,16 @@
-FROM python:3.9
+FROM python:3.11-slim
 
-ENV PYTHONPATH=${PYTHONPATH}:${PWD} 
+ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
 RUN apt update && apt-get install -y supervisor
-# RUN pip install  kedro-fast-api --no-dependencies
+# RUN pip install kedro-fast-api --no-dependencies
 
-RUN  pip install poetry
+RUN pip install uv
 
 RUN mkdir /requirements
-RUN poetry config virtualenvs.create false
-COPY pyproject.toml /requirements
-COPY poetry.lock /requirements
+COPY pyproject.toml uv.lock /requirements
 WORKDIR /requirements
-RUN poetry install --only main
+RUN uv export --frozen --no-dev --no-emit-project --no-hashes -o requirements.txt && uv pip install --system -r requirements.txt
 
 COPY .env /
 RUN mkdir /app
