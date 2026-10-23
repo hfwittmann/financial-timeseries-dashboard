@@ -8,7 +8,7 @@ RUN apt update && apt-get install -y supervisor
 RUN pip install uv
 
 RUN mkdir /requirements
-COPY pyproject.toml uv.lock /requirements
+COPY pyproject.toml uv.lock /requirements/
 WORKDIR /requirements
 RUN uv export --frozen --no-dev --no-emit-project --no-hashes -o requirements.txt && uv pip install --system -r requirements.txt
 
