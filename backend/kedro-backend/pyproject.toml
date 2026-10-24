@@ -1,7 +1,7 @@
 [tool.kedro]
 package_name = "backend"
 project_name = "backend"
-project_version = "0.18.4"
+kedro_init_version = "1.7.0"
 
 [tool.isort]
 profile = "black"
@@ -15,3 +15,6 @@ addopts = """
 fail_under = 0
 show_missing = true
 exclude_lines = ["pragma: no cover", "raise NotImplementedError"]
+
+[tool.kedro_telemetry]
+project_id = "55dca26d37b6439db3c16f53e37c9589"

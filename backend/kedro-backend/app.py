@@ -11,7 +11,7 @@ from itertools import chain
 
 project_path = Path.cwd()
 metadata = bootstrap_project(project_path)
-session = KedroSession.create(metadata.package_name, project_path)
+session = KedroSession.create(project_path)
 context = session.load_context()
 
 app = FastAPI(
@@ -136,9 +136,8 @@ def kedro(
 
     tag = _get_values_as_tuple(tag) if tag else tag
     node_names = _get_values_as_tuple(node_names) if node_names else node_names
-    package_name = str(Path(__file__).resolve().parent.name)
     try:
-        with KedroSession.create(package_name, env=None, extra_params=params) as session:
+        with KedroSession.create(project_path, env=None, runtime_params=params) as session:
             return session.run(
                     tags=tag,
                     node_names=node_names,
