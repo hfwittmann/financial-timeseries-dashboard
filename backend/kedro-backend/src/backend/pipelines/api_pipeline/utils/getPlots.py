@@ -34,7 +34,7 @@ def __scatter_plot(performance_data: pd.DataFrame, ticker: str):
 
 
 def __returns_plot(performance_data, ticker):
-    returns = performance_data.diff(axis=0) / performance_data
+    returns = performance_data.diff(axis=0) / performance_data.shift(1)
 
     trace_open = go.Scatter(
         x=returns.index,
@@ -65,9 +65,7 @@ def __returns_plot(performance_data, ticker):
 
 
 def __histogram_plot(performance_data, ticker):
-    returns = performance_data.diff(axis=0) / performance_data
-
-    returns = performance_data.diff(axis=0) / performance_data
+    returns = performance_data.diff(axis=0) / performance_data.shift(1)
 
     trace_open = go.Histogram(
         x=returns["Open"], marker={"colorscale": "Viridis"}, name="Open"

@@ -46,7 +46,7 @@ class Stockticker_provider:
             plottype = df_args.loc[0, "plottype"].split(".")[-1]
 
             myData = pd.read_json(
-                f"data/01_raw/{selection}.json", orient="index"
+                f"data/01_raw/{selection.replace('.', '_')}.json", orient="index"
             ).T.loc[0]
             assert myData["status"] == "success"
 
@@ -54,6 +54,7 @@ class Stockticker_provider:
 
             company_timeseries = pd.read_json(myData["dataframe"])
             performance_data = company_timeseries.set_index("Date")
+            performance_data.sort_index(ascending=True, inplace=True)
 
             myplot = getPlot(
                 plottype=plottype,
@@ -62,8 +63,7 @@ class Stockticker_provider:
                 ticker=tickers.at[selection, "Company"],
             )
         except Exception as e:
-            self.save({"status": "failure", "plot": None})
-            pass
+            return pd.Series({"status": "failure", "plot": None, "error": str(e)})
 
             # prediction = self.model.predict(df_args)
 
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     input = [
         {
-            "plottype": "Stockticker_providerplottype.scatter",
+            "plottype": "Stockticker_providerplottype.returns",
             "selection": "BAS.DE",
         }
     ]
