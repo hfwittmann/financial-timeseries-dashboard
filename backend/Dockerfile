@@ -3,8 +3,6 @@
   ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 
   RUN apt update && apt-get install -y supervisor
-  RUN pip install kedro-fast-api --no-dependencies
-
   RUN pip install uv
 
   RUN mkdir /requirements

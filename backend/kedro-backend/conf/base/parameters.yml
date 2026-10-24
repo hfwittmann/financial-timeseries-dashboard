@@ -1,1 +1,1 @@
-ticker_symbol: ${ticker_symbol}
+ticker_symbol: ${runtime_params:ticker_symbol, ${globals:ticker_symbol}}

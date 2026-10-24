@@ -4,17 +4,17 @@
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
 
 mytoymodel:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/06_models/mytoymodel.json
 
 tickers:
-  type: pandas.CSVDataSet
+  type: pandas.CSVDataset
   filepath: data/01_raw/tickers.csv
 
 data_message:
-  type: json.JSONDataSet
+  type: json.JSONDataset
   filepath: data/02_intermediate/data_message.json
 
 ticker_symbol_data:
-  type: json.JSONDataSet
-  filepath: data/01_raw/${ticker_symbol}.json
+  type: json.JSONDataset
+  filepath: data/01_raw/${runtime_params:ticker_symbol, ${globals:ticker_symbol}}.json
