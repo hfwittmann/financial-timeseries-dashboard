@@ -1,5 +1,5 @@
 ---
-# Builds the backend and frontend images, smoke-tests them the way the server runs them, and on main
+# Builds the backend and frontend images, smoke-tests them the way the server runs them, and on master
 # pushes them to GHCR as public packages. The server pulls them by digest and never builds
 # (server-infra ADR-0003). No secret enters an image or its build.
 name: Images
@@ -7,7 +7,7 @@ name: Images
 "on":
   pull_request:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 permissions:
@@ -65,5 +65,5 @@ jobs:
               docker tag "smoke/$part" "$REGISTRY_PATH/$part:$tag"
               docker push --quiet "$REGISTRY_PATH/$part:$tag"
             done
-            echo "$part: $(docker image inspect -f '{{index .RepoDigests 0}}' "$REGISTRY_PATH/$part:main")" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "$part: $(docker image inspect -f '{{index .RepoDigests 0}}' "$REGISTRY_PATH/$part:master")" | tee -a "$GITHUB_STEP_SUMMARY"
           done
