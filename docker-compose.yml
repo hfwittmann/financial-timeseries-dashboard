@@ -1,16 +1,22 @@
 # Local run: builds both images and starts them the way the server does (code inside the images,
 # settings from the environment, data in a named volume). The dashboard is at http://localhost:8501.
+x-hardening: &hardening
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+
 services:
   dax-backend:
+    <<: *hardening
     build: ./backend
     environment:
       PYTHONPATH: "."
     volumes:
       - dax-data:/app/data
     tmpfs: [/tmp, /app/logs]
-    read_only: true
 
   dax-frontend:
+    <<: *hardening
     build: ./frontend
     environment:
       HOST: "dax-backend:8000"
@@ -18,7 +24,6 @@ services:
     ports:
       - "127.0.0.1:8501:8501"
     tmpfs: [/tmp]
-    read_only: true
     depends_on: [dax-backend]
 
 volumes:
