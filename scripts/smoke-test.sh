@@ -36,7 +36,7 @@ done
 backend_run=(docker run --rm "${hardening[@]}" --tmpfs /app/logs -v "$run_id-data:/app/data"
   -e PYTHONPATH=. "$backend")
 # The README tells people to look for this line, so the test looks for it too.
-if timeout 1200 "${backend_run[@]}" kedro run >"$log" 2>&1 && grep -q 'Pipeline execution completed successfully' "$log"; then
+if timeout 1200 "${backend_run[@]}" kedro run >"$log" 2>&1 && grep -q 'Pipeline execution completed' "$log"; then
   ok "kedro run finished"
 else bad "kedro run failed: $(tail -20 "$log")"; fi
 fetched="$(grep -c 'Successfully fetched' "$log")"

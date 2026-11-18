@@ -17,8 +17,8 @@ docker compose exec dax-backend kedro run
 docker compose restart dax-backend
 ````
 
-`kedro run` takes a few minutes and has worked when its log ends with `Pipeline execution completed
-successfully` and lists `Successfully fetched data` for most of the stocks. After that the backend
+`kedro run` takes under a minute and has worked when its log ends with `Completed 5 out of 5 tasks`
+and `Pipeline execution completed successfully`, with `Successfully fetched data` for most stocks. After that the backend
 refreshes the data every day at 09:00 (UTC, the container's time zone).
 
 The images for the server are built by GitHub Actions (`.github/workflows/images.yml`), checked by
