@@ -18,8 +18,8 @@ docker compose restart dax-backend
 ````
 
 `kedro run` takes under a minute and has worked when its log ends with `Completed 5 out of 5 tasks`
-and `Pipeline execution completed successfully`, with `Successfully fetched data` for most stocks. After that the backend
-refreshes the data every day at 09:00 (UTC, the container's time zone).
+and `Pipeline execution completed successfully`, with `Successfully fetched data` for most stocks.
+After that the backend refreshes the data every day at 09:00 (UTC, the container's time zone).
 
 The images for the server are built by GitHub Actions (`.github/workflows/images.yml`), checked by
 `scripts/smoke-test.sh` and pushed to `ghcr.io/hfwittmann/financial-timeseries-dashboard/backend` and
