@@ -54,7 +54,8 @@ if curl -fsS http://127.0.0.1:18000/Tickerlist_provider?datatype=tickerlist | gr
 else bad "backend does not answer: $(docker logs --tail 30 "$run_id-backend" 2>&1)"; fi
 # The frontend draws one chart per stock from this endpoint; ADS.DE is the pipeline's default ticker.
 chart="$(curl -fsS 'http://127.0.0.1:18000/Stockticker_provider?plottype=returns&selection=ADS.DE' 2>&1)"
-if python3 -c 'import json,sys; d=json.loads(sys.argv[1]); assert d["status"]=="success" and d["plot"]' "$chart" 2>/dev/null; then
+# On stdin: a chart is larger than the 128 KiB one shell argument may hold.
+if python3 -c 'import json,sys; d=json.load(sys.stdin); assert d["status"]=="success" and d["plot"]' <<<"$chart" 2>/dev/null; then
   ok "backend serves a chart for ADS.DE"
 else bad "backend serves no chart for ADS.DE: $(head -c 200 <<<"$chart")"; fi
 
