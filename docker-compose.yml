@@ -1,23 +1,30 @@
-version: '3.1'
+# Local run: builds both images and starts them the way the server does (code inside the images,
+# settings from the environment, data in a named volume). The dashboard is at http://localhost:8501.
+x-hardening: &hardening
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+
 services:
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - 8000:8000
+  dax-backend:
+    <<: *hardening
+    build: ./backend
+    environment:
+      PYTHONPATH: "."
     volumes:
-      - ./backend/kedro-backend:/app
+      - dax-data:/app/data
+    tmpfs: [/tmp, /app/logs]
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+  dax-frontend:
+    <<: *hardening
+    build: ./frontend
+    environment:
+      HOST: "dax-backend:8000"
+      PYTHONPATH: "."
     ports:
-      - 8501:8501
-    volumes:
-      - ./frontend/requirements:/requirements
-      - ./frontend/app:/app
-    depends_on:
-      - backend
+      - "127.0.0.1:8501:8501"
+    tmpfs: [/tmp]
+    depends_on: [dax-backend]
+
+volumes:
+  dax-data:

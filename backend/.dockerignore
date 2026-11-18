@@ -1,0 +1,9 @@
+# Data is a volume on the server and is rebuilt by the daily job; local files stay out of the image.
+.env
+**/.env
+kedro-backend/data
+kedro-backend/logs
+kedro-backend/notebooks
+kedro-backend/docs
+kedro-backend/.vscode
+**/__pycache__
