@@ -3,37 +3,25 @@ This post is very much about technology integration. Its aim is to build a dashb
 
 This repo is used and described in the following blog post: https://arthought.com/financial-timeseries-dashboard/
 
-To run, simply do the following:
-
-1.
-  - In the the backend folder
-  create a file with name .env with the following contents:
-
-  ````
-  PYTHONPATH=.
-  HOST=localhost
-  ````
-  - In the the front end folder
-create a file with name .env with the following contents:
+To run it locally (needs Docker with Compose):
 
 ````
-PYTHONPATH=.
-HOST=backend
+docker compose up --build -d
 ````
 
-
-Now run
+No `.env` file is needed: the settings (`HOST`, `PYTHONPATH`) are in `docker-compose.yml`. The first
+start has no data yet; fill it once with
 
 ````
-docker-compose -p deployment -f docker-compose.yml up --build -d
+docker compose exec dax-backend kedro run
+docker compose restart dax-backend
 ````
 
-Your app should be now start to build. Depending on your system it might take a while.
+After that the backend refreshes the data every day at 09:00.
 
-After a while it should be up and running.
+The images for the server are built by GitHub Actions (`.github/workflows/images.yml`), checked by
+`scripts/smoke-test.sh` and pushed to `ghcr.io/hfwittmann/financial-timeseries-dashboard/backend` and
+`.../frontend`. The server pulls them by digest and never builds.
 
-The dashboard should available at http://localhost:8501
-The swagger ui should be available at local: http://localhost:5000/api/ui/#
-
-
-In the backend folder you will find a sub-folder called data, with cached Data from the d6tflow package.
+The dashboard is then at http://localhost:8501. The backend has no published port; its API is only
+reachable from the frontend, inside the Compose network.
