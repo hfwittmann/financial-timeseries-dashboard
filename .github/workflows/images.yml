@@ -61,7 +61,7 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           for part in backend frontend; do
-            for tag in main "sha-$GITHUB_SHA"; do
+            for tag in master "sha-$GITHUB_SHA"; do
               docker tag "smoke/$part" "$REGISTRY_PATH/$part:$tag"
               docker push --quiet "$REGISTRY_PATH/$part:$tag"
             done
