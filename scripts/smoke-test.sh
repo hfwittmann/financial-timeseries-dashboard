@@ -38,6 +38,8 @@ backend_run=(docker run --rm "${hardening[@]}" --tmpfs /app/logs -v "$run_id-dat
 if timeout 1200 "${backend_run[@]}" kedro run >"$log" 2>&1; then
   ok "kedro run finished"
 else bad "kedro run failed: $(tail -20 "$log")"; fi
+fetched="$(grep -c 'Successfully fetched' "$log")"
+[ "$fetched" -gt 0 ] && ok "price data fetched for $fetched stocks" || bad "no price data fetched: $(grep -m3 -i error "$log")"
 
 # 3. The backend API answers on the internal network.
 docker run -d --name "$run_id-backend" --network "$run_id" --network-alias dax-backend \
@@ -50,6 +52,11 @@ done
 if curl -fsS http://127.0.0.1:18000/Tickerlist_provider?datatype=tickerlist | grep -q myData; then
   ok "backend serves the ticker list"
 else bad "backend does not answer: $(docker logs --tail 30 "$run_id-backend" 2>&1)"; fi
+# The frontend draws one chart per stock from this endpoint; ADS.DE is the pipeline's default ticker.
+chart="$(curl -fsS 'http://127.0.0.1:18000/Stockticker_provider?plottype=returns&selection=ADS.DE' 2>&1)"
+if python3 -c 'import json,sys; d=json.loads(sys.argv[1]); assert d["status"]=="success" and d["plot"]' "$chart" 2>/dev/null; then
+  ok "backend serves a chart for ADS.DE"
+else bad "backend serves no chart for ADS.DE: $(head -c 200 <<<"$chart")"; fi
 
 # 4. The frontend starts and reaches the backend by the name given in HOST.
 docker run -d --name "$run_id-frontend" --network "$run_id" "${hardening[@]}" \
