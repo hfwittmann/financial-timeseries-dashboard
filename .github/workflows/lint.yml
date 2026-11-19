@@ -1,0 +1,22 @@
+---
+# Checks the workflows themselves: actionlint, with shellcheck on every run: block. SC2312 is on, so
+# a command whose failure is hidden inside echo "$(...)" fails here (server-infra#57).
+name: Lint
+
+"on":
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: actionlint (shellcheck is preinstalled on the runner)
+        env:
+          SHELLCHECK_OPTS: --enable=check-extra-masked-returns
+        run: pipx run --spec actionlint-py==1.7.12.25 actionlint
