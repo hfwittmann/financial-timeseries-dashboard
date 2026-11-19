@@ -26,7 +26,7 @@ setup(
         "docs": [
             "docutils<0.18.0",
             "sphinx~=3.4.3",
-            "sphinx_rtd_theme==0.5.1",
+            "sphinx_rtd_theme==0.5.2",
             "nbsphinx==0.8.1",
             "nbstripout~=0.4",
             "sphinx-autodoc-typehints==1.11.1",
