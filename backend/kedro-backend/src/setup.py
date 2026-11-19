@@ -24,7 +24,7 @@ setup(
     install_requires=requires,
     extras_require={
         "docs": [
-            "docutils<0.18.0",
+            "docutils<0.23.1",
             "sphinx~=3.4.3",
             "sphinx_rtd_theme==0.5.1",
             "nbsphinx==0.8.1",
