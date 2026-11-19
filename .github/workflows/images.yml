@@ -65,5 +65,10 @@ jobs:
               docker tag "smoke/$part" "$REGISTRY_PATH/$part:$tag"
               docker push --quiet "$REGISTRY_PATH/$part:$tag"
             done
-            echo "$part: $(docker image inspect -f '{{index .RepoDigests 0}}' "$REGISTRY_PATH/$part:master")" | tee -a "$GITHUB_STEP_SUMMARY"
+            # The digest is read first, so a failed lookup fails the step instead of printing an
+            # empty line. RepoDigests may name the local smoke/ image; only the sha256 part counts.
+            digest="$(docker image inspect -f '{{index .RepoDigests 0}}' "$REGISTRY_PATH/$part:master")" || exit 1
+            digest="${digest#*@}"
+            [[ "$digest" == sha256:* ]] || { echo "no digest for $part" >&2; exit 1; }
+            echo "$part: $REGISTRY_PATH/$part:master@$digest" | tee -a "$GITHUB_STEP_SUMMARY"
           done
