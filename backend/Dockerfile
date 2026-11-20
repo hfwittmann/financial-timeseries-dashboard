@@ -1,7 +1,7 @@
 # Backend: FastAPI app and the daily 09:00 pipeline run, both under supervisord.
 # The code is inside the image; settings (PYTHONPATH) come from the environment at runtime, never
 # from a .env file.
-FROM python:3.11-slim@sha256:07d4824036af339fa1b6ef769cc99d9c10a141769538b52b3b597c84f7a7b535
+FROM python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90
 
 COPY --from=ghcr.io/astral-sh/uv:0.13.9@sha256:d3b601f0c7b118bc1753febf7c41cc80981df678445e0254284eecf84db79a7d /uv /usr/local/bin/uv
 

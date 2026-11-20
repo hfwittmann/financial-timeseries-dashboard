@@ -19,6 +19,11 @@
       "matchDepNames": ["python"],
       "matchUpdateTypes": ["minor"],
       "automerge": false
+    },
+    {
+      "description": "Python stays on 3.13 for now: 3.15 failed (#23: lz4 had no wheel for it). Raise this when the next step is planned",
+      "matchDepNames": ["python"],
+      "allowedVersions": "<3.14"
     }
   ]
 }
