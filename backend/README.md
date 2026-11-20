@@ -17,13 +17,15 @@ In order to get the best out of the template:
 
 ## How to install dependencies
 
-Declare any dependencies in `src/requirements.txt` for `pip` installation and `src/environment.yml` for `conda` installation.
-
-To install them, run:
+The dependencies are in `pyproject.toml` in this folder, locked in `uv.lock`; the Docker image
+installs exactly those. To install them locally (with the dev tools such as IPython), run in this
+folder:
 
 ```
-pip install -r src/requirements.txt
+uv sync
 ```
+
+To add one: `uv add <package>`. Renovate keeps both files up to date.
 
 ## How to run your Kedro pipeline
 
@@ -43,25 +45,11 @@ kedro test
 
 To configure the coverage threshold, go to the `.coveragerc` file.
 
-## Project dependencies
-
-To generate or update the dependency requirements for your project:
-
-```
-kedro build-reqs
-```
-
-This will `pip-compile` the contents of `src/requirements.txt` into a new file `src/requirements.lock`. You can see the output of the resolution by opening `src/requirements.lock`.
-
-After this, if you'd like to update your project requirements, please update `src/requirements.txt` and re-run `kedro build-reqs`.
-
-[Further information about project dependencies](https://kedro.readthedocs.io/en/stable/kedro_project_setup/dependencies.html#project-specific-dependencies)
-
 ## How to work with Kedro and notebooks
 
 > Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, `catalog`, and `startup_error`.
 >
-> Jupyter, JupyterLab, and IPython are already included in the project requirements by default, so once you have run `pip install -r src/requirements.txt` you will not need to take any extra steps before you use them.
+> IPython is in the dev dependencies, so `uv sync` installs it. Jupyter is not; install it as below.
 
 ### Jupyter
 To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
