@@ -6,5 +6,19 @@
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["before 6am on monday"]
-  }
+  },
+  "packageRules": [
+    {
+      "description": "Small updates merge by themselves once CI passes (both images built and smoke-tested as the server runs them, with a real data run; actionlint). Every update already waits 7 days after release (minimumReleaseAge). Major updates wait for Felix (as in arthought-blog, 2026-11-20)",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "description": "A new Python 3.x (the image and requires-python) can break code, though Renovate calls it minor: it waits for Felix",
+      "matchDepNames": ["python"],
+      "matchUpdateTypes": ["minor"],
+      "automerge": false
+    }
+  ]
 }
