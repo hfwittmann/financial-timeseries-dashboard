@@ -33,7 +33,7 @@ setup(
             "sphinx_copybutton==0.3.1",
             "ipykernel>=5.3, <7.0",
             "Jinja2<3.1.0",
-            "myst-parser~=0.17.2",
+            "myst-parser~=0.19.2",
         ]
     },
 )
