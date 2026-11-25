@@ -438,7 +438,7 @@ dev = [
     { name = "black", specifier = ">=26.10.1" },
     { name = "flake8", specifier = ">=6.0.0,<7.0.0" },
     { name = "ipython", specifier = ">=8.8.0,<9.0.0" },
-    { name = "nbstripout", specifier = ">=0.6.1,<0.7.0" },
+    { name = "nbstripout", specifier = ">=0.9.2,<0.10.0" },
 ]
 
 [[package]]
@@ -476,14 +476,14 @@ wheels = [
 
 [[package]]
 name = "nbstripout"
-version = "0.6.2"
+version = "0.9.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nbformat" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/90/fb/e2ada676652db3dbbd2da0d7f366f508b5f54dfc3b8f1995ddb3cb34d385/nbstripout-0.6.2.tar.gz", hash = "sha256:ada2c70a9b72dc96e2433c40d7bd8b27ad8b54217d5d7a89c4e352877743a37d", size = 24860, upload-time = "2024-02-04T08:45:15.123Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/38/4d/79077e0ae4c6a4d5a854f984d243bdcf22a220a5d47fee399160cda5f022/nbstripout-0.9.2.tar.gz", hash = "sha256:77ca8ddefd1f41d8d9560d79576b1e1a34b203cefd89a98574c6f0725edf160f", size = 32842, upload-time = "2026-11-17T21:45:31.181Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/42/9c/56301d6d2165f3bc5c4dd520a827c1d5790b2b91664230ff9188e7416e53/nbstripout-0.6.2-py2.py3-none-any.whl", hash = "sha256:2eddf4033db5bbe9e96bbb85d09746a050cb662f31601c786a4cf78552ae5303", size = 15765, upload-time = "2024-02-04T08:45:13.146Z" },
+    { url = "https://files.pythonhosted.org/packages/d8/91/221772f8073f70633f10ee42d9aa85b33e2d6e83cd066835a0a7bedfc407/nbstripout-0.9.2-py3-none-any.whl", hash = "sha256:55b5b708845d0bd61060e6281593e637496aca4bc459e05a99eb3d934cfba1be", size = 19140, upload-time = "2026-11-17T21:45:29.888Z" },
 ]
 
 [[package]]
